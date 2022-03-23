@@ -92,6 +92,15 @@ class VmvpApis {
         console.log("<><<>><><>", e);
       }
     }
+    async updateTeamMate(id,data) {
+      try {
+        const res = await axios.patch(VMVP_API_BASE_URL + "/team/"+id,data, config);
+  
+        return res;
+      } catch (e) {
+        console.log("<><<>><><>", e);
+      }
+    }
 }
 
 export default new VmvpApis();

@@ -14,7 +14,7 @@ import {
 } from "antd";
 import VmvpApis from "../../services/ApiUrli";
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
-const TeamForm = ({}) => {
+const TeamForm = ({ teamMate, update }) => {
   const [loading, setLoading] = useState(false);
   const normFile = (e) => {
     console.log("Upload event:", e);
@@ -33,22 +33,36 @@ const TeamForm = ({}) => {
 
   const onFinish = async (value) => {
     setLoading(true);
-    const _value={
+    const _value = {
       ...value,
-      picture: value?.pict[0].response.secure_url,
       socialMedia: {
         linkedin: value?.linkedin,
         facebook: value?.facebook,
         instagram: value?.instagram,
         twitter: value?.twitter,
       },
+    };
+    // console.log("@@###@@", _value);
+    let res;
+    if (update) {
+      res = await VmvpApis.updateTeamMate(teamMate?._id, {
+        ...teamMate,
+        ..._value,
+        picture: !value.pict
+          ? teamMate?.picture
+          : value?.pict[0]?.response?.secure_url,
+      });
+    } else {
+      res = await VmvpApis.createTeam({
+        ..._value,
+        picture: value?.pict[0].response.secure_url,
+      });
     }
-    console.log("@@###@@", _value);
-    const res = await VmvpApis.createTeam(_value);
 
     if (res.status === 200) {
       setLoading(false);
       notification.success({ message: "Team Mate added Success!" });
+      window.location.reload();
     } else {
       setLoading(false);
       notification.error({ message: "Failed to register! Try Again" });
@@ -63,20 +77,26 @@ const TeamForm = ({}) => {
   return (
     <Form
       labelCol={{
-        span: 4,
+        span: 6,
       }}
       wrapperCol={{
         span: 14,
       }}
       layout="horizontal"
       initialValues={{
-        size: componentSize,
+        name: teamMate?.name,
+        title: teamMate?.title,
+        description: teamMate?.description,
+        facebook: teamMate?.socialMedia.facebook,
+        linkedin: teamMate?.socialMedia.linkedin,
+        instagram: teamMate?.socialMedia.instagram,
+        twitter: teamMate?.socialMedia.twitter,
       }}
       onFinish={onFinish}
       size={componentSize}
     >
       <Row gutter={24}>
-        <Col span={11}>
+        <Col span={10}>
           <Form.Item
             label="Names"
             name="name"
@@ -106,6 +126,7 @@ const TeamForm = ({}) => {
           <Form.Item
             label="Role"
             name="role"
+            initialValue={teamMate?.role}
             rules={[
               {
                 required: true,
@@ -125,6 +146,12 @@ const TeamForm = ({}) => {
               valuePropName="fileList"
               getValueFromEvent={normFile}
               noStyle
+              rules={[
+                {
+                  required: update ? false : true,
+                  message: "Please upload Picture",
+                },
+              ]}
             >
               <Upload.Dragger
                 name="files"
@@ -143,7 +170,7 @@ const TeamForm = ({}) => {
             </Form.Item>
           </Form.Item>
         </Col>
-        <Col span={11}>
+        <Col span={10}>
           <Form.Item
             name="description"
             label="Description"
@@ -170,10 +197,10 @@ const TeamForm = ({}) => {
             <Input placeholder="linkedin link" />
           </Form.Item>
         </Col>
-        <Col span={2} style={{ textAlign: "center" }}>
+        <Col span={4} style={{ textAlign: "center" }}>
           <Form.Item>
             <Button htmlType="submit" loading={loading}>
-              Register
+              {update ? "Update" : "Register"}
             </Button>
           </Form.Item>
         </Col>

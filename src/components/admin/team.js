@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Drawer, Table, Tag, Space, Collapse } from "antd";
+import { Card, Drawer, Table, Tag, Space, Collapse, notification } from "antd";
 // import data from "../../assets/table/student";
 import TeamForm from "./teamForm";
 import VmvpApis from "../../services/ApiUrli";
@@ -9,10 +9,21 @@ const { Panel } = Collapse;
 const Team = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [teamFormTitle, setTeamFormTitle] = useState("Add New Team Member");
+  const [updateDrawerVisible, setUpdateDrawerVisible] = useState(false);
   const [data, setData] = useState([]);
   const [selectedTeamMate, setSelectedTeamMate] = useState({});
   const onDrawerClose = () => {
     setIsDrawerVisible(false);
+  };
+
+  const updateActivation = async (id, data) => {
+    const res = await VmvpApis.updateTeamMate(id, data);
+
+    if (res.status === 200) {
+      window.location.reload();
+    } else {
+      notification.error({ message: "Failed to update" });
+    }
   };
 
   useEffect(() => {
@@ -61,11 +72,18 @@ const Team = () => {
             View
           </a>
           {record?.status ? (
-            <a style={{ color: "red" }}>Deactivate</a>
+            <a style={{ color: "red" }} onClick={() =>updateActivation(record?._id,{status:false})}>Deactivate</a>
           ) : (
-            <a style={{ color: "greeen" }}>Activate</a>
+            <a style={{ color: "green" }} onClick={() =>updateActivation(record?._id,{status:true})} >Activate</a>
           )}
-          <a>Edit</a>
+          <a
+            onClick={() => {
+              setSelectedTeamMate(record);
+              setUpdateDrawerVisible(true);
+            }}
+          >
+            Edit
+          </a>
         </Space>
       ),
     },
@@ -92,6 +110,15 @@ const Team = () => {
         visible={isDrawerVisible}
       >
         <TeamView singleTeam={selectedTeamMate} />
+      </Drawer>
+      <Drawer
+        title="Update Student"
+        placement="top"
+        onClose={() => setUpdateDrawerVisible(false)}
+        visible={updateDrawerVisible}
+        size="large"
+      >
+        <TeamForm teamMate={selectedTeamMate} update={true} />
       </Drawer>
     </>
   );

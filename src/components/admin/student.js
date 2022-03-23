@@ -115,8 +115,9 @@ const Students = () => {
           )}
           <a
             onClick={() => {
-              setSingleStudent(record);
+              console.log("***8***",record)
               setUpdateDrawerVisible(true);
+              setSingleStudent(record);
             }}
           >
             Edit
