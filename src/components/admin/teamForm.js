@@ -154,7 +154,7 @@ const TeamForm = ({}) => {
               },
             ]}
           >
-            <Input.TextArea showCount maxLength={100} />
+            <Input.TextArea showCount maxLength={500} />
           </Form.Item>
 
           <Form.Item label="Facebook" name="facebook">

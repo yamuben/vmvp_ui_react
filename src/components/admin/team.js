@@ -32,6 +32,11 @@ const Team = () => {
       key: "title",
     },
     {
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
+    },
+    {
       title: "Status",
       key: "status",
       dataIndex: "status",

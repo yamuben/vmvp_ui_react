@@ -2,7 +2,8 @@ import { notification } from "antd";
 import axios from "axios";
 
 // const AWEP_API_BASE_URL = "https://awep-rwanda.herokuapp.com/awep/api/v1"
-const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
+// const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
+const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
 
 var config = {
   headers: {

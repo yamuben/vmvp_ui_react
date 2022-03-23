@@ -51,19 +51,19 @@ const Team = ({ singleTeam }) => {
           <DescriptionItem title="Social Medias" content="" />
           <DescriptionLinkItem
             title="Linkedin"
-            content={singleTeam?.socialMedia.linkedin}
+            content={singleTeam.socialMedia?.linkedin}
           />
           <DescriptionLinkItem
             title="Facebook"
-            content={singleTeam?.socialMedia.facebook}
+            content={singleTeam.socialMedia?.facebook}
           />
           <DescriptionLinkItem
             title="Instagram"
-            content={singleTeam?.socialMedia.instagram}
+            content={singleTeam.socialMedia?.instagram}
           />
           <DescriptionLinkItem
             title="Twitter"
-            content={singleTeam?.socialMedia.twitter}
+            content={singleTeam.socialMedia?.twitter}
           />
           <Divider />
           {/* <DescriptionItem title="Problem One" content={singleTeam?.problemOne} /> */}
