@@ -92,7 +92,7 @@ const StoryForm = ({}) => {
               },
             ]}
           >
-            <Input.TextArea showCount maxLength={100} />
+            <Input.TextArea showCount maxLength={500} />
           </Form.Item>
         </Col>
         <Col span={2} style={{ textAlign: "center" }}>

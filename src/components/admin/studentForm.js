@@ -186,11 +186,11 @@ const StudentForm = ({ student, update }) => {
               },
             ]}
           >
-            <Input.TextArea showCount maxLength={100} />
+            <Input.TextArea showCount maxLength={500} />
           </Form.Item>
 
           <Form.Item name="problemTwo" label="Solution">
-            <Input.TextArea showCount maxLength={100} />
+            <Input.TextArea showCount maxLength={500} />
           </Form.Item>
 
           <Form.Item
@@ -203,7 +203,7 @@ const StudentForm = ({ student, update }) => {
               },
             ]}
           >
-            <Input.TextArea showCount maxLength={100} />
+            <Input.TextArea showCount maxLength={500} />
           </Form.Item>
         </Col>
         <Col span={2} style={{ textAlign: "center" }}>
