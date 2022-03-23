@@ -12,7 +12,7 @@ const DescriptionItem = ({ title, content }) => (
 const Student = ({ singleStudent }) => {
   return (
     <Card>
-        <h1> Child</h1>
+        {/* <h1> Child</h1> */}
       <Row>
         <Col span={12}>
           <img src={singleStudent?.picture} width="100%" alt="std" />
@@ -26,9 +26,9 @@ const Student = ({ singleStudent }) => {
           <hr style={{opacity:"0.3"}}/>
           <DescriptionItem title="Dreams" content={singleStudent?.dream} />
           <hr style={{opacity:"0.3"}}/>
-          <DescriptionItem title="Problem One" content={singleStudent?.problemOne} />
+          <DescriptionItem title="Problem " content={singleStudent?.problemOne} />
           <hr style={{opacity:"0.3"}}/>
-          <DescriptionItem title="Problem Two" content={singleStudent?.problemTwo} />
+          <DescriptionItem title="Solution" content={singleStudent?.problemTwo} />
         </Col>
       </Row>
     </Card>

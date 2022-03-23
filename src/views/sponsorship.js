@@ -82,7 +82,7 @@ const SponsorshipView = () => {
       </Card>
       <Drawer
         size="large"
-        title="Apply To Support This Child"
+        title="Apply To Suponsor This Child"
         placement="right"
         onClose={onDrawerClose}
         visible={isDrawerVisible}

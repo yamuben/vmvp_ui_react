@@ -178,7 +178,7 @@ const StudentForm = ({ student, update }) => {
         <Col span={11}>
           <Form.Item
             name="problemOne"
-            label="Problem 1"
+            label="Problem"
             rules={[
               {
                 required: true,
@@ -189,7 +189,7 @@ const StudentForm = ({ student, update }) => {
             <Input.TextArea showCount maxLength={100} />
           </Form.Item>
 
-          <Form.Item name="problemTwo" label="Problem 2">
+          <Form.Item name="problemTwo" label="Solution">
             <Input.TextArea showCount maxLength={100} />
           </Form.Item>
 
