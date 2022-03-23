@@ -89,7 +89,7 @@ const SponsorshipView = () => {
       >
         <SingleChild singleStudent={child} />
        {child?.isAvailable? ( <Button type="primary" style={{background:"green"}} onClick={() => setIsDownDrawerVisible(true)}>
-         Click here to Give Support
+         Sponsor Me!
         </Button>):(<></>) }
       </Drawer>
       <Drawer
