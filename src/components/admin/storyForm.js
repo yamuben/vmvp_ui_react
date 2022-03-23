@@ -67,7 +67,7 @@ const StoryForm = ({}) => {
               getValueFromEvent={normFile}
               noStyle
             >
-              <Upload.Dragger name="files" action="/upload.do">
+              <Upload.Dragger name="files" action="https://vmvp-api.herokuapp.com/api/v1/students/photo">
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>

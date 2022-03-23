@@ -155,7 +155,7 @@ const TeamForm = ({ teamMate, update }) => {
             >
               <Upload.Dragger
                 name="files"
-                action="http://localhost:4047/api/v1/students/photo"
+                action="https://vmvp-api.herokuapp.com/api/v1/students/photo"
               >
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
