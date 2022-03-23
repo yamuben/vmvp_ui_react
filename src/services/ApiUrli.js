@@ -1,7 +1,6 @@
 import { notification } from "antd";
 import axios from "axios";
 
-// const AWEP_API_BASE_URL = "https://awep-rwanda.herokuapp.com/awep/api/v1"
 // const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
 const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
 
@@ -78,6 +77,15 @@ class VmvpApis {
     async updateRequest(id,data) {
       try {
         const res = await axios.patch(VMVP_API_BASE_URL + "/sponsorRequest/update/"+id,data, config);
+  
+        return res;
+      } catch (e) {
+        console.log("<><<>><><>", e);
+      }
+    }
+    async updateStudent(id,data) {
+      try {
+        const res = await axios.put(VMVP_API_BASE_URL + "/students/"+id,data, config);
   
         return res;
       } catch (e) {

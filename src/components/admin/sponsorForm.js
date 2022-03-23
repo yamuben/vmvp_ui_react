@@ -123,7 +123,7 @@ const SponsorForm = ({ child }) => {
         </Col>
         <Col span={2} style={{ textAlign: "center" }}>
           <Form.Item>
-            <Button htmlType="submit" loading={loading}>APPLY</Button>
+            <Button type="primary" style={{background:"green"}}  htmlType="submit" loading={loading}>APPLY</Button>
           </Form.Item>
         </Col>
       </Row>

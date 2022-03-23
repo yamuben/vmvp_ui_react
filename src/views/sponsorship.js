@@ -41,7 +41,7 @@ const SponsorshipView = () => {
         {loading ? (
           <Skeleton active />
         ) : (
-          allChildren.map((_child) => (
+          allChildren.map((_child) => _child?.isActive ? (
             <Card.Grid style={gridStyle} hoverable={false}>
               <Card
                 hoverable
@@ -77,7 +77,7 @@ const SponsorshipView = () => {
                 </p>
               </Card>
             </Card.Grid>
-          ))
+          ):(<></>))
         )}
       </Card>
       <Drawer
@@ -88,8 +88,8 @@ const SponsorshipView = () => {
         visible={isDrawerVisible}
       >
         <SingleChild singleStudent={child} />
-       {child?.isAvailable? ( <Button onClick={() => setIsDownDrawerVisible(true)}>
-          Apply To Support
+       {child?.isAvailable? ( <Button type="primary" style={{background:"green"}} onClick={() => setIsDownDrawerVisible(true)}>
+         Click here to Give Support
         </Button>):(<></>) }
       </Drawer>
       <Drawer

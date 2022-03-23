@@ -17,8 +17,8 @@ import {
 
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
 
-const StudentForm = ({}) => {
-  const [loading,setLoading]=useState(false)
+const StudentForm = ({ student, update }) => {
+  const [loading, setLoading] = useState(false);
   const normFile = (e) => {
     console.log("Upload event:", e);
 
@@ -34,22 +34,37 @@ const StudentForm = ({}) => {
     setComponentSize(size);
   };
 
-  const onFinish = async(value) => {
+  const onFinish = async (value) => {
     console.log("@@@@", value);
-setLoading(true)
-   const res= await VmvpApis.createStudent({...value,picture:value?.pict[0].response.secure_url})
-  //  console.log("rrrrrreeeeeesssss",res)
-  if(res.status===200){
-    setLoading(false)
-    notification.success({message:"Success registered!"})
-    window.location.reload()
-  }
-  else{
-    setLoading(false)
-    notification.error({message:"Failed to register Child"})
- 
-
-  }
+    setLoading(true);
+    let res;
+    if (update) {
+      console.log(":::::::::::", student);
+      res = await VmvpApis.updateStudent(student?._id, {
+        ...student,
+        ...value,
+        picture: !value.pict
+          ? student?.picture
+          : value?.pict[0]?.response?.secure_url,
+        dateOfBirth: !value?.dateOfBirth
+          ? student?.dateOfBirth
+          : value?.dateOfBirth,
+      });
+    } else {
+      res = await VmvpApis.createStudent({
+        ...value,
+        picture: value?.pict[0].response.secure_url,
+      });
+    }
+    //  console.log("rrrrrreeeeeesssss",res)
+    if (res.status === 200) {
+      setLoading(false);
+      notification.success({ message: "Success registered!" });
+      window.location.reload();
+    } else {
+      setLoading(false);
+      notification.error({ message: "Failed to register Child" });
+    }
   };
 
   // problemOne:String,
@@ -60,14 +75,18 @@ setLoading(true)
   return (
     <Form
       labelCol={{
-        span: 4,
+        span: 6,
       }}
       wrapperCol={{
         span: 14,
       }}
       layout="horizontal"
       initialValues={{
-        size: componentSize,
+        name: student?.name,
+        class: student?.class,
+        problemOne: student?.problemOne,
+        problemTwo: student?.problemTwo,
+        dream: student?.dream,
       }}
       onFinish={onFinish}
       size={componentSize}
@@ -100,7 +119,11 @@ setLoading(true)
             <Input />
           </Form.Item>
 
-          <Form.Item label="Gender" name="gender">
+          <Form.Item
+            label="Gender"
+            name="gender"
+            initialValue={student?.gender}
+          >
             <Select>
               <Select.Option value="female">Female</Select.Option>
               <Select.Option value="male">Male</Select.Option>
@@ -111,13 +134,16 @@ setLoading(true)
             name="dateOfBirth"
             rules={[
               {
-                required: true,
+                required: update ? false : true,
                 message: "Please input Intro",
               },
             ]}
           >
             <DatePicker />
           </Form.Item>
+          <p style={{ textAlign: "center" }}>
+            {student?.dateOfBirth.slice(0, 10)}{" "}
+          </p>
 
           <Form.Item label="Picture">
             <Form.Item
@@ -125,6 +151,12 @@ setLoading(true)
               valuePropName="fileList"
               getValueFromEvent={normFile}
               noStyle
+              rules={[
+                {
+                  required: update ? false : true,
+                  message: "Please upload Picture",
+                },
+              ]}
             >
               <Upload.Dragger
                 name="files"
@@ -176,7 +208,9 @@ setLoading(true)
         </Col>
         <Col span={2} style={{ textAlign: "center" }}>
           <Form.Item>
-            <Button htmlType="submit" loading={loading}>Save</Button>
+            <Button htmlType="submit" loading={loading}>
+              {update ? "Update" : "Register"}
+            </Button>
           </Form.Item>
         </Col>
       </Row>
