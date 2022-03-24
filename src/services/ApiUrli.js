@@ -1,8 +1,8 @@
 import { notification } from "antd";
 import axios from "axios";
 
-// const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
-const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
+const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
+// const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
 
 var config = {
   headers: {
@@ -11,15 +11,24 @@ var config = {
 };
 
 class VmvpApis {
-    async getAllStudents() {
-      try {
-        const res = await axios.get(VMVP_API_BASE_URL + "/students", config);
-  
-        return res;
-      } catch (e) {
-        console.log("<><<>><><>", e);
-      }
+  async getAllStudents() {
+    try {
+      const res = await axios.get(VMVP_API_BASE_URL + "/students", config);
+
+      return res;
+    } catch (e) {
+      console.log("<><<>><><>", e);
     }
+  }
+  async getAllStories() {
+    try {
+      const res = await axios.get(VMVP_API_BASE_URL + "/story", config);
+
+      return res;
+    } catch (e) {
+      console.log("<><<>><><>", e);
+    }
+  }
     async getAllTeamMates() {
       try {
         const res = await axios.get(VMVP_API_BASE_URL + "/team", config);
@@ -68,6 +77,15 @@ class VmvpApis {
     async createSponsor(id,data) {
       try {
         const res = await axios.post(VMVP_API_BASE_URL + "/sponsors/create/"+id,data, config);
+  
+        return res;
+      } catch (e) {
+        console.log("<><<>><><>", e);
+      }
+    }
+    async createStory(data) {
+      try {
+        const res = await axios.post(VMVP_API_BASE_URL + "/story",data, config);
   
         return res;
       } catch (e) {

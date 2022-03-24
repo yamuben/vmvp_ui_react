@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Drawer, Table, Tag, Space, Collapse } from "antd";
-import data from "../../assets/table/student";
 import StoryForm from "./storyForm";
+import VmvpApis from "../../services/ApiUrli";
+import SingleStory from "./getOne/Story";
 
 const { Panel } = Collapse;
 const Story = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [teamFormTitle, setStoryFormTitle] = useState("Add New Story ");
+  const [data, setData] = useState([]);
+  const [selectedStory,setSelectedStory]= useState({})
   const onDrawerClose = () => {
     setIsDrawerVisible(false);
   };
+  useEffect(() => {
+    VmvpApis.getAllStories().then((res) => setData(res?.data.data));
+  }, []);
   const columns = [
     {
       title: "Names",
@@ -18,29 +24,13 @@ const Story = () => {
       render: (text) => <a>{text}</a>,
     },
     {
-      title: "Title",
-      dataIndex: "class",
-      key: "class",
-    },
-    {
-      title: "Role",
-      key: "isAvailable",
-      dataIndex: "isAvailable",
-      render: (r) => (
-        <Tag color={r ? "green" : "red"} key={r}>
-          {" "}
-          {r ? "green" : "red"}{" "}
-        </Tag>
-      ),
-    },
-    {
       title: "Status",
-      key: "isAvailable",
-      dataIndex: "isAvailable",
+      key: "status",
+      dataIndex: "status",
       render: (r) => (
         <Tag color={r ? "green" : "red"} key={r}>
           {" "}
-          {r ? "green" : "red"}{" "}
+          {r ? "Visible" : "Hidden"}{" "}
         </Tag>
       ),
     },
@@ -49,7 +39,7 @@ const Story = () => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <a onClick={() => setIsDrawerVisible(true)}>View</a>
+          <a onClick={() => {setSelectedStory(record); setIsDrawerVisible(true)}}>View</a>
           <a>Hide</a>
           <a>Edit</a>
         </Space>
@@ -72,11 +62,14 @@ const Story = () => {
         </Card>
       </Card>
       <Drawer
-        title="Basic Drawer"
+      size="large"
+        title="Story"
         placement="right"
         onClose={onDrawerClose}
         visible={isDrawerVisible}
-      ></Drawer>
+      >
+        <SingleStory singleStory={selectedStory}/>
+      </Drawer>
     </>
   );
 };

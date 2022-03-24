@@ -9,12 +9,15 @@ import {
   DatePicker,
   Upload,
   TreeSelect,
+  notification,
   Switch,
 } from "antd";
 
 import { UploadOutlined, InboxOutlined } from "@ant-design/icons";
+import VmvpApis from "../../services/ApiUrli";
 
-const StoryForm = ({}) => {
+const StoryForm = ({story,update}) => {
+  const [loading, setLoading]= useState(false);
   const normFile = (e) => {
     console.log("Upload event:", e);
 
@@ -30,8 +33,37 @@ const StoryForm = ({}) => {
     setComponentSize(size);
   };
 
-  const onFinish = (value) => {
+  const onFinish = async(value) => {
     console.log("@@@@", value);
+    setLoading(true);
+    let res;
+    if (update) {
+      console.log(":::::::::::", story);
+      res = await VmvpApis.updateStory(story?._id, {
+        ...story,
+        ...value,
+        picture: !value.pict
+          ? story?.picture
+          : value?.pict[0]?.response?.secure_url,
+        dateOfBirth: !value?.dateOfBirth
+          ? story?.dateOfBirth
+          : value?.dateOfBirth,
+      });
+    } else {
+      res = await VmvpApis.createStory({
+        ...value,
+        picture: value?.pict[0].response.secure_url,
+      });
+    }
+    //  console.log("rrrrrreeeeeesssss",res)
+    if (res.status === 200) {
+      setLoading(false);
+      notification.success({ message: "Success registered!" });
+      window.location.reload();
+    } else {
+      setLoading(false);
+      notification.error({ message: "Failed to register Child" });
+    }
   };
 
   // problemOne:String,
@@ -62,7 +94,7 @@ const StoryForm = ({}) => {
 
           <Form.Item label="Picture">
             <Form.Item
-              name="picture"
+              name="pict"
               valuePropName="fileList"
               getValueFromEvent={normFile}
               noStyle
@@ -97,7 +129,9 @@ const StoryForm = ({}) => {
         </Col>
         <Col span={2} style={{ textAlign: "center" }}>
           <Form.Item>
-            <Button htmlType="submit">Save</Button>
+          <Button htmlType="submit" loading={loading}>
+              {update ? "Update" : "Register"}
+            </Button>
           </Form.Item>
         </Col>
       </Row>

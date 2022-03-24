@@ -62,7 +62,7 @@ const Sponsor = () => {
     <>
       {" "}
       <Card>
-        <Collapse>
+        <Collapse collapsible="disabled">
           <Panel header={SponsorFormTitle} key="1">
             <SponsorForm />
           </Panel>
