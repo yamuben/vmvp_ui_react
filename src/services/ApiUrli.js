@@ -1,8 +1,8 @@
 import { notification } from "antd";
 import axios from "axios";
 
-const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
-// const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
+// const VMVP_API_BASE_URL = "http://localhost:4047/api/v1";
+const VMVP_API_BASE_URL = "https://vmvp-api.herokuapp.com/api/v1";
 
 var config = {
   headers: {
