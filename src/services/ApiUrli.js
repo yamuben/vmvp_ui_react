@@ -119,6 +119,15 @@ class VmvpApis {
         console.log("<><<>><><>", e);
       }
     }
+    async updateStory(id,data) {
+      try {
+        const res = await axios.put(VMVP_API_BASE_URL + "/story/"+id,data, config);
+  
+        return res;
+      } catch (e) {
+        console.log("<><<>><><>", e);
+      }
+    }
 }
 
 export default new VmvpApis();
